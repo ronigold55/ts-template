@@ -1,13 +1,14 @@
 import express, { Request, Response } from "express"
+import { prodcutRouter } from "./controllers/productControllers";
+import { appConfig } from "./utils/appConfig";
 
 const server = express();
 
 // load body
 server.use(express.json());
 
-server.get("/", (req: Request, res: Response)=>{
-    res.send("<h1>Hello World!</h1>")
-})
+// register controllers
+server.use("/", prodcutRouter)
 
-server.listen(3000, ()=>{console.log("Listening on http://localhost:3000");
+server.listen(appConfig.port, ()=>{console.log(`Listening on http://localhost:${appConfig.port}`);
 })
