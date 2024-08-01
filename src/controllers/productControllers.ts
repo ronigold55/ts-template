@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
-import { addProdcut, getProducts } from "../services/productService";
+import { addProdcut, getProducts, updateProdcut } from "../services/productService";
 import ProdcutModel from "../models/productModel";
+import { appConfig } from "../utils/appConfig";
 
 export const prodcutRouter = express.Router();
 
-prodcutRouter.get("/products", async (req: Request, res: Response, next: NextFunction) => {
+prodcutRouter.get(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await getProducts();
         res.status(200).json(products);
@@ -41,3 +42,21 @@ prodcutRouter.post("/products", async (req: Request, res: Response, next: NextFu
         res.status(500).send("Internal Server Errro");
     }
 })
+
+prodcutRouter.put("/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {        
+        await updateProdcut(req.body, +req.params.id);
+        res.status(200).send("ok");
+    } catch (error) {
+        
+        if (error.message.includes("product id not found")) {
+            res.status(400).send("ID not found")
+            return
+        }
+
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+
