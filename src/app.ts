@@ -1,9 +1,13 @@
-import express, { Request, Response } from "express"
+import express, { NextFunction, Request, Response } from "express"
 import { prodcutRouter } from "./controllers/productControllers";
 import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
+import { doorman } from "./middlewares/doormanMiddleware";
+import catchAll from "./middlewares/catchAll";
 
 const server = express();
+
+server.use(doorman);
 
 // load body
 server.use(express.json());
@@ -11,6 +15,8 @@ server.use(express.json());
 // register controllers
 server.use("/", prodcutRouter)
 
+// Error handling
+server.use(catchAll);
 
 isDbServerUp().then((isUp) => {
     if (isUp) {

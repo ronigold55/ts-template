@@ -2,36 +2,37 @@ import express, { Request, Response, NextFunction } from "express";
 import { addProdcut, getProducts, updateProdcut } from "../services/productService";
 import ProdcutModel from "../models/productModel";
 import { appConfig } from "../utils/appConfig";
+import { StatusCode } from "../models/statusEnum";
 
 export const prodcutRouter = express.Router();
 
 prodcutRouter.get(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await getProducts();
-        res.status(200).json(products);
+        res.status(StatusCode.Ok).json(products);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Error. please try again later")
+        res.status(StatusCode.ServerError).send("Error. please try again later")
     }
 })
 
-prodcutRouter.get("/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+prodcutRouter.get(appConfig.routePrefix + "/products/:id", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const product = await getProducts(+req.params.id);
-        res.status(200).json(product[0]);
+        res.status(StatusCode.Ok).json(product[0]);
     } catch (error) {
 
         if (error.message.includes("product id not found")) {
-            res.status(404).send("ID not found")
-            return
+            next(new Error("ID not found"));
+            return;
         }
 
         console.log(error);
-        res.status(500).send("Error. please try again later")
+        res.status(StatusCode.ServerError).send("Error. please try again later")
     }
 })
 
-prodcutRouter.post("/products", async (req: Request, res: Response, next: NextFunction) => {
+prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const newProduct = new ProdcutModel(req.body);
@@ -43,19 +44,19 @@ prodcutRouter.post("/products", async (req: Request, res: Response, next: NextFu
     }
 })
 
-prodcutRouter.put("/products/:id", async (req: Request, res: Response, next: NextFunction) => {
-    try {        
+prodcutRouter.put(appConfig.routePrefix + "/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
         await updateProdcut(req.body, +req.params.id);
-        res.status(200).send("ok");
+        res.status(StatusCode.Ok).send("ok");
     } catch (error) {
-        
+
         if (error.message.includes("product id not found")) {
-            res.status(400).send("ID not found")
+            res.status(StatusCode.BadRequest).send("ID not found")
             return
         }
 
         console.log(error);
-        res.status(500).send("Internal Server Error");
+        res.status(StatusCode.ServerError).send("Internal Server Error");
     }
 })
 
