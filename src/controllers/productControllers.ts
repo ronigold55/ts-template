@@ -39,8 +39,7 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
         await addProdcut(newProduct);
         res.status(201).send("ok");
     } catch (error) {
-        console.log(error);
-        res.status(500).send("Internal Server Errro");
+        next(error)
     }
 })
 

@@ -1,6 +1,7 @@
 import assert from "assert";
 import runQuery from "../db/dal";
 import ProdcutModel from "../models/productModel";
+import { ValidationError } from "../models/exceptions";
 
 export async function getProducts(id?: number): Promise<ProdcutModel[]> {
     let q = `SELECT * FROM product`;
@@ -19,6 +20,11 @@ export async function getProducts(id?: number): Promise<ProdcutModel[]> {
 }
 
 export async function addProdcut(p:ProdcutModel) {
+
+    if (p.price < 0 || typeof(p.price) !== 'number'){
+        throw new ValidationError("Price must be positive number");
+    }
+
     const q = `INSERT INTO product (name, description, price) 
                 VALUES ('${p.name}', '${p.description || ""}', ${p.price})`;
         

@@ -1,23 +1,35 @@
 import { StatusCode } from "./statusEnum";
 
-export abstract class AppExcption{
+export abstract class AppExcption {
     readonly message: string;
     readonly status: number;
 
-    constructor(message, status){
+    constructor(message: string, status: number) {
         this.message = message;
         this.status = status;
     }
 }
 
-export class ValidationError extends AppExcption{
-    constructor(message: string){
+export class ValidationError extends AppExcption {
+    constructor(message: string) {
         super(message, StatusCode.BadRequest);
     }
 }
 
 export class NotFoundError extends AppExcption {
-    constructor(message: string){
+    constructor(message: string) {
         super(message, StatusCode.NotFound);
+    }
+}
+
+export class UnknownError extends AppExcption {
+    constructor(message: string = "Unknown Error!", status = StatusCode.ServerError) {
+        super(message, status)
+    }
+}
+
+export class UnauthorizedError extends AppExcption {
+    constructor(message: string){
+        super(message, StatusCode.Unauthorized);
     }
 }
