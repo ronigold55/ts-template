@@ -21,9 +21,7 @@ export async function getProducts(id?: number): Promise<ProdcutModel[]> {
 
 export async function addProdcut(p:ProdcutModel) {
 
-    if (p.price < 0 || typeof(p.price) !== 'number'){
-        throw new ValidationError("Price must be positive number");
-    }
+    p.validate()
 
     const q = `INSERT INTO product (name, description, price) 
                 VALUES ('${p.name}', '${p.description || ""}', ${p.price})`;
@@ -32,10 +30,23 @@ export async function addProdcut(p:ProdcutModel) {
 }
 
 export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
+    
+    // p.validate()
+
+    // // fetch current product data
+    // const oldProduct = await getProducts(id)[0];
+    
+    // const updateQuery = `
+    // UPDATE product SET name=${p.name || oldProduct.name }, 
+    //                    price=${p.price ||}
+    // `
+
+    // check id exists in DB
     let q = `SELECT id FROM product WHERE id=${id};`;
     const res = await runQuery(q);    
     assert(res.length === 1, "product id not found");    
     
+    // create update query
     q = `UPDATE product SET `;
     if (p.name){
         q += `name = '${p.name}'`;
@@ -57,8 +68,7 @@ export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
         throw new Error("No filed specify to update.")
     }
 
-    q += ` WHERE id=${id};`;
-    console.log(q);
+    q += ` WHERE id=${id};`;    
     
     await runQuery(q);    
 }
