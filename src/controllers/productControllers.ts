@@ -48,14 +48,7 @@ prodcutRouter.put(appConfig.routePrefix + "/products/:id", async (req: Request, 
         await updateProdcut(req.body, +req.params.id);
         res.status(StatusCode.Ok).send("ok");
     } catch (error) {
-
-        if (error.message.includes("product id not found")) {
-            res.status(StatusCode.BadRequest).send("ID not found")
-            return
-        }
-
-        console.log(error);
-        res.status(StatusCode.ServerError).send("Internal Server Error");
+        next(error)
     }
 })
 

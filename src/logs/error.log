@@ -4,3 +4,5 @@ Price must be positive number"price" must be a positive number
 "name" length must be at least 2 characters long
  "name" length must be at least 2 characters long
  "name" length must be at least 2 characters long
+DBG: Doorman
+"price" must be a positive number
