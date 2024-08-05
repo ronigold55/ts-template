@@ -1,6 +1,8 @@
 class AppConfig {
     readonly port : number = 4000
     readonly routePrefix = "/api/v1";
+    readonly errorLogFile = __dirname + "\\..\\logs\\error.log";
+    readonly accessLogFile = __dirname + "\\..\\logs\\access.log";
     readonly doormanKey = "rivka-token-temp-test-whatever";
     readonly dbConfig = {
         host: 'localhost',

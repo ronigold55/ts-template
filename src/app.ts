@@ -4,10 +4,16 @@ import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
 import { doorman } from "./middlewares/doormanMiddleware";
 import catchAll from "./middlewares/catchAll";
+import { logMW } from "./middlewares/logMW";
 
+// create server
 const server = express();
 
+// Doorman security chcek
 server.use(doorman);
+
+// log
+server.use(logMW);
 
 // load body
 server.use(express.json());
@@ -18,6 +24,7 @@ server.use("/", prodcutRouter)
 // Error handling
 server.use(catchAll);
 
+// run server only if DB-server is active
 isDbServerUp().then((isUp) => {
     if (isUp) {
         server.listen(appConfig.port, () => {
