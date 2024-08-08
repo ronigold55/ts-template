@@ -5,12 +5,13 @@ import { isDbServerUp } from "./utils/helpers";
 import { doorman } from "./middlewares/doormanMiddleware";
 import catchAll from "./middlewares/catchAll";
 import { logMW } from "./middlewares/logMW";
+import { authRoutes } from "./controllers/authControllers";
 
 // create server
 const server = express();
 
 // Doorman security chcek
-server.use(doorman);
+// server.use(doorman);
 
 // log
 server.use(logMW);
@@ -20,6 +21,7 @@ server.use(express.json());
 
 // register controllers
 server.use("/", prodcutRouter)
+server.use("/", authRoutes)
 
 // Error handling
 server.use(catchAll);
