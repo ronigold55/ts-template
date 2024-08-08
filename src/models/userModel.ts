@@ -1,6 +1,15 @@
 import Joi from "joi";
 import { ValidationError } from "./exceptions";
 
+interface UserInterface {
+    id?: number;
+    username: string;
+    password?: string;
+    email: string;
+    isAdmin: boolean;
+    token: string;
+}
+
 export default class UserModel {
     id?: number;
     username: string;
@@ -9,7 +18,7 @@ export default class UserModel {
     isAdmin: boolean;
     token: string;
 
-    constructor(user: any ){
+    constructor(user: UserInterface ){
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;

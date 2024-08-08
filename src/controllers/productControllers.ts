@@ -3,10 +3,11 @@ import { addProdcut, getProducts, updateProdcut } from "../services/productServi
 import ProdcutModel from "../models/productModel";
 import { appConfig } from "../utils/appConfig";
 import { StatusCode } from "../models/statusEnum";
+import { verifyToeknAdminMW, verifyToeknMW } from "../middlewares/authMiddlewares";
 
 export const prodcutRouter = express.Router();
 
-prodcutRouter.get(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
+prodcutRouter.get(appConfig.routePrefix + "/products", verifyToeknMW ,async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await getProducts();
         res.status(StatusCode.Ok).json(products);
@@ -32,7 +33,7 @@ prodcutRouter.get(appConfig.routePrefix + "/products/:id", async (req: Request, 
     }
 })
 
-prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
+prodcutRouter.post(appConfig.routePrefix + "/products", verifyToeknAdminMW, async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const newProduct = new ProdcutModel(req.body);
