@@ -1,6 +1,7 @@
 import assert from "assert";
 import runQuery from "../db/dal";
 import ProdcutModel from "../models/productModel";
+import { ValidationError } from "../models/exceptions";
 
 export async function getProducts(id?: number): Promise<ProdcutModel[]> {
     let q = `SELECT * FROM product`;
@@ -29,7 +30,11 @@ export async function addProdcut(p:ProdcutModel) {
 }
 
 export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
-            
+    
+    if(! p.name && !p.price && !p.description){
+        throw new ValidationError("No field specified to update!");
+    }
+
     let products = await getProducts(id);
     const product = {...products[0], ...p};
     
