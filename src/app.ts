@@ -1,11 +1,12 @@
 import express, { NextFunction, Request, Response } from "express"
-import { prodcutRouter } from "./controllers/productControllers";
+
 import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
 import { doorman } from "./middlewares/doormanMiddleware";
 import catchAll from "./middlewares/catchAll";
 import { logMW } from "./middlewares/logMW";
 import { authRoutes } from "./controllers/authControllers";
+import { productRouter } from "./controllers/productControllers";
 
 // create server
 const server = express();
@@ -20,7 +21,7 @@ server.use(logMW);
 server.use(express.json());
 
 // register controllers
-server.use("/", prodcutRouter)
+server.use("/", productRouter)
 server.use("/", authRoutes)
 
 // Error handling

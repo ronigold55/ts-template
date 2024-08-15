@@ -1,13 +1,13 @@
 import { ValidationError } from "./exceptions";
 import Joi from "joi";
 
-class ProdcutModel {
+class ProductModel {
     id: number;
     name: string;
     price: number;
     description: string;
 
-    constructor(pm: ProdcutModel){
+    constructor(pm: ProductModel){
         this.id = pm.id;
         this.name = pm.name;
         this.description = pm.description;
@@ -22,11 +22,11 @@ class ProdcutModel {
     })
 
     validate(): void {               
-        const res = ProdcutModel.validateSchema.validate(this)
+        const res = ProductModel.validateSchema.validate(this)
         if (res.error){                                                
             throw new ValidationError(res.error.details[0].message)            
         }
     }
 }
 
-export default ProdcutModel;
+export default ProductModel;

@@ -1,9 +1,9 @@
 import assert from "assert";
 import runQuery from "../db/dal";
-import ProdcutModel from "../models/productModel";
+import ProductModel from "../models/productModel";
 import { ValidationError } from "../models/exceptions";
 
-export async function getProducts(id?: number): Promise<ProdcutModel[]> {
+export async function getProducts(id?: number): Promise<ProductModel[]> {
     let q = `SELECT * FROM product`;
 
     if (id)
@@ -15,11 +15,11 @@ export async function getProducts(id?: number): Promise<ProdcutModel[]> {
         throw new Error("product id not found")
     }
 
-    const products = res.map((p) => new ProdcutModel(p));
+    const products = res.map((p) => new ProductModel(p));
     return products
 }
 
-export async function addProdcut(p:ProdcutModel) {
+export async function addProduct(p:ProductModel) {
 
     p.validate()
 
@@ -29,7 +29,7 @@ export async function addProdcut(p:ProdcutModel) {
     await runQuery(q);
 }
 
-export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
+export async function updateProduct(p: Partial<ProductModel>, id: number) {
     
     if(! p.name && !p.price && !p.description){
         throw new ValidationError("No field specified to update!");
