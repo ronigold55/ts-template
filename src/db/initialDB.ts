@@ -39,6 +39,7 @@ const createTables = async () => {
         order_id INT NOT NULL,
         product_id INT NOT NULL,
         quantity INT NOT NULL,
+        
         FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (product_id) REFERENCES product(id)
         )
@@ -48,10 +49,10 @@ const createTables = async () => {
 
 const createSampleData = async ()=>{
     let Q = `
-        INSERT INTO user (username, password, email, isAdmin, token) values 
-        ('David', '123', 'david@gmail.com', false, 'awvasnvsae45rtq23wf'),
-        ('Moshe', '123', 'moshe@gmail.com', false, 'awvasnvsae45rtq23wf564'),
-        ('Ori', '123', 'ori@gmail.com', true, 'awvasnvsae45rtq2323rsdcvwf');        
+        INSERT INTO user (username, password, email, isAdmin) values 
+        ('David', '123', 'david@gmail.com', false),
+        ('Moshe', '123', 'moshe@gmail.com', false),
+        ('Ori', '123', 'ori@gmail.com', true);        
     `
     await runQuery(Q);
     

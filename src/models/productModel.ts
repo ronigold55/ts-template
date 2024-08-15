@@ -7,7 +7,7 @@ class ProductModel {
     price: number;
     description: string;
 
-    constructor(pm: ProductModel){
+    constructor(pm: ProductModel){  // copy constructor
         this.id = pm.id;
         this.name = pm.name;
         this.description = pm.description;
