@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express"
-
+import cors from "cors"
 import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
 import { doorman } from "./middlewares/doormanMiddleware";
@@ -11,6 +11,8 @@ import { orderRouts } from "./controllers/orderControllers";
 
 // create server
 const server = express();
+
+server.use(cors());
 
 // Doorman security chcek
 // server.use(doorman);
