@@ -9,10 +9,12 @@ import { authRoutes } from "./controllers/authControllers";
 import { productRouter } from "./controllers/productControllers";
 import { orderRouts } from "./controllers/orderControllers";
 
+
 // create server
 const server = express();
 
-server.use(cors());
+// cors
+server.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}));
 
 // Doorman security chcek
 // server.use(doorman);

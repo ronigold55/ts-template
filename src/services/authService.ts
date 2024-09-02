@@ -26,8 +26,10 @@ export async function createUser(user:UserModel) {
 }
 
 export async function login(email:string, password: string) {
-    let q = `SELECT * FROM user WHERE email='${email}' AND password='${password}';`;
-    const res = await runQuery(q);
+    let q = `SELECT * FROM user WHERE email=? AND password=?;`;
+    const params = [email, password]    
+    
+    const res = await runQuery(q, params);
 
     if (res.length === 0){
         throw new UnauthorizedError("wrong credentials");
@@ -40,6 +42,5 @@ export async function login(email:string, password: string) {
         await runQuery(q)
     }
 
-    return user.token;
-    
+    return user.token;    
 }

@@ -4,7 +4,7 @@ import { appConfig } from "./appConfig";
 
 export async function isDbServerUp() {    
     try {
-        await runQuery("select id from product where id=0;");
+        await runQuery("select 1;");
         return true;
     } catch (error) {
         return false;        

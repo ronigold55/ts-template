@@ -16,8 +16,7 @@ export async function createOrder(order: OrderModel) {
     let q = `INSERT INTO orders (user_id, created, comments)
             VALUES (${order.userId}, "2024-07-29 20:00:10", "${order.comments || ""}");`;
             // VALUES (${order.userId}, ${order.created.toLocaleDateString("en-GB")}, "${order.comments || ""}");`;
-
-    console.log(q);
+    
 
     const dbRes = (await runQuery(q)) as ResultSetHeader | any;
     // console.log(createOrder);
@@ -25,8 +24,7 @@ export async function createOrder(order: OrderModel) {
 
     for (const pi of order.products) {
         q = `INSERT INTO orderItem (order_id, product_id, quantity)
-            VALUES (${orderId}, ${pi.productId}, ${pi.quantity});`;
-        console.log(q);
+            VALUES (${orderId}, ${pi.productId}, ${pi.quantity});`;        
         try {
             await runQuery(q);
         } catch (error) {
