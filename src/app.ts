@@ -8,10 +8,16 @@ import { logMW } from "./middlewares/logMW";
 import { authRoutes } from "./controllers/authControllers";
 import { productRouter } from "./controllers/productControllers";
 import { orderRouts } from "./controllers/orderControllers";
-
+import expressRateLimit from "express-rate-limit";
 
 // create server
 const server = express();
+
+// protect from dos attack 
+server.use(expressRateLimit({
+    windowMs: 1000,  // time window
+    max: 2,     // amount of calls (per time window)
+}))
 
 // cors
 server.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}));
