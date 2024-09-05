@@ -1,11 +1,12 @@
-import runQuery from "./dal"
+import runQuery, { closeDB } from "./dal";
+
 
 const createTables = async () => {
     let Q = `
         CREATE TABLE IF NOT EXISTS user  (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(50) NOT NULL,
-            password VARCHAR(50) NOT NULL,
+            password VARCHAR(255) NOT NULL,
             email VARCHAR(50) UNIQUE NOT NULL ,
             isAdmin BOOLEAN DEFAULT false,
             token VARCHAR(255)
@@ -47,15 +48,17 @@ const createTables = async () => {
     await runQuery(Q)
 }
 
-const createSampleData = async ()=>{
+const createSampleData = async () => {
+
+    // the password is encripted version of "1234"
     let Q = `
         INSERT INTO user (username, password, email, isAdmin) values 
-        ('David', '123', 'david@gmail.com', false),
-        ('Moshe', '123', 'moshe@gmail.com', false),
-        ('Ori', '123', 'ori@gmail.com', true);        
+        ('David', '$2b$10$UgS9FHNjmQcUJ8y1FPnWvOpW4T7vgCgCvj7CEMjhDfGBiOtNdO.My', 'david@gmail.com', false),  
+        ('Moshe', '$2b$10$UgS9FHNjmQcUJ8y1FPnWvOpW4T7vgCgCvj7CEMjhDfGBiOtNdO.My', 'moshe@gmail.com', false),
+        ('Ori', '$2b$10$UgS9FHNjmQcUJ8y1FPnWvOpW4T7vgCgCvj7CEMjhDfGBiOtNdO.My', 'ori@gmail.com', true);        
     `
     await runQuery(Q);
-    
+
     Q = `
     INSERT INTO product (name, price, description) values 
         ('apple', 3.5, 'Greate apple from the OTEF'),
@@ -64,15 +67,15 @@ const createSampleData = async ()=>{
         ('bamba', 1, 'Isreali bamba')
     `
     await runQuery(Q);
-    
+
     Q = `
     INSERT INTO orders (user_id, comments) values 
             (1, 'please do not ring the bell!'),
             (2, ''),
             (2, 'hurry up!')
-            `   
+            `
     await runQuery(Q);
-    
+
     Q = `
     INSERT INTO orderItem (order_id, product_id, quantity) values
             (1, 2, 1),
@@ -87,11 +90,15 @@ const createSampleData = async ()=>{
             (3, 3, 4),
             (3, 4, 2)
             `
-    await runQuery(Q);            
+    await runQuery(Q);
 }
 
 // createTables().then(() => {
 //     console.log("Done creating tables");
+//     closeDB()
 // })
 
-// createSampleData().then(()=>{console.log("Done adding data");})
+// createSampleData().then(()=>{
+//     console.log("Done adding data");
+//     closeDB()
+// })
