@@ -5,7 +5,8 @@ import { appConfig } from "../src/utils/appConfig";
 import { StatusCode } from "../src/models/statusEnum";
 import { closeDB } from "../src/db/dal";
 
-const VALID_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyV2l0aG91dFBhc3N3b3JkIjp7ImlkIjozLCJ1c2VybmFtZSI6Ik9yaSIsImVtYWlsIjoib3JpQGdtYWlsLmNvbSIsImlzQWRtaW4iOjEsInRva2VuIjpudWxsfSwiaWF0IjoxNzI1NTUyNDYzfQ.pudNSdnuIPeecR4QTX1VYGgtCTwNswBnSInW6Wm2FTk"
+const VALID_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyV2l0aG91dFBhc3N3b3JkIjp7ImlkIjozLCJ1c2VybmFtZSI6Ik9yaSIsImVtYWlsIjoib3JpQGdtYWlsLmNvbSIsImlzQWRtaW4iOjEsInRva2VuIjpudWxsfSwiaWF0IjoxNzI1ODYyODQzfQ.2azttPEMkDqkf9hj_meNoy2scNy5ZsCAylf7hVcmEIw";
 
 const app = express();
 app.use(express.json());
