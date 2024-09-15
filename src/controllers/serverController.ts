@@ -13,22 +13,18 @@ serverRouters.get("/servers", async (req: Request, res: Response, next: NextFunc
     }
 })
 
-serverRouters.post("/servers/:id",async (req: Request, res: Response, next: NextFunction) => {
 
+serverRouters.post(  "/servers/:id",  async (req: Request, res: Response, next: NextFunction) => {
+    // console.log("YO");
     
-    
-    try {                
-        const id = +req.params.id;
-        const newValue = req.body.newValue;
-        
-        if (newValue === undefined){
-            res.status(400).send("newValue is missing");
-            return;
-        }        
-        await updateOnLine(id, newValue);
-        res.status(200).send("Updated")
+    const { statusOnline } = req.body;
+    const { id } = req.params;
 
-    } catch (error) {
-        next(error)
+    try {
+      await updateOnLine(Number(id), statusOnline);
+      res.status(200).json({ message: "Park status updated successfully" });
+    } catch (err) {
+      next(err);
     }
-})
+  }
+);
