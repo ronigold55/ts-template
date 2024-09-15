@@ -10,6 +10,9 @@ const server = express();
 // cors
 server.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}));
 
+//use json
+server.use(express.json());
+
 
 
 // load body
@@ -18,7 +21,7 @@ server.use(express.json());
 // register controllers:
 server.use("/", serverRouters)
 
-// catch erros
+// catch error
 server.use(catchAll)
 
 server.listen(appConfig.port, ()=>{console.log(`Listening on http://localhost:${appConfig.port}`);

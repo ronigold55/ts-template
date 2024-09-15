@@ -1,31 +1,33 @@
 import runQuery from "../db/dal";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader } from 'mysql2/promise';
 
 
 type serverData = {
     id: number;
     serverName : string;
     ip:number;
-    isOnLine: boolean;
-    isFree: boolean;
     hostingCompany: string;
-    datetime: number;    
+    dateTime: number;    
     num: number;
+    companyNameServer_id: number;
+    statusOnline: number;
+
 }
 
 export async function getServer(): Promise<serverData[]> {
-    let q = `SELECT servers.id, servers.isOnLine, servers.isFree, address.city, address.street, address.num FROM serverName JOIN address ON park.address_id = address.id;`;
+    let q = `SELECT servername.id, servername.serverName, servername.IP, servername.companyNameServer_id, servername.statusOnline ,servername.created
+             FROM serverName
+             JOIN companyNameServer ON servername.companyNameServer_id = companyNameServer.id;`;
     const servers = await runQuery(q);
-    return servers
+    return servers;
 }
+
+
 
 export async function updateOnLine(id: number, newValue: boolean) {
-    let q = `UPDATE server SET  isOnLine = ${newValue} WHERE id=${id};`;
+    let q = `UPDATE servers  SET statusOnline= ${newValue} WHERE id=${id};`;
     const res = (await runQuery(q)) as ResultSetHeader | any;
     if (res.affectedRows === 0){
-        console.log("Warning: try to update non-exists server");        
+        console.log("Warning: try to update non-exists park");        
     }    
 }
-
-// updateOccupied(100, false).then(()=>{console.log("Done");
-// })

@@ -6,14 +6,14 @@ export const serverRouters = express.Router();
 
 serverRouters.get("/servers", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const parks = await getServer();
-        res.status(200).json(parks);
+        const server = await getServer();
+        res.status(200).json(server);
     } catch (error) {
         next(error)  // TODO: add catchAll
     }
 })
 
-serverRouters.patch("/servers/:id",async (req: Request, res: Response, next: NextFunction) => {
+serverRouters.post("/servers/:id",async (req: Request, res: Response, next: NextFunction) => {
 
     
     
