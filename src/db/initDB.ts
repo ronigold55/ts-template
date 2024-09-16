@@ -13,11 +13,11 @@ export async function createTables(): Promise<void> {
        CREATE TABLE IF NOT EXISTS serverName (
            id INT AUTO_INCREMENT PRIMARY KEY,
            serverName VARCHAR(255) NOT NULL,
-           IP VARCHAR(15) NOT NULL,
-           companyNameServer_id INT,
-           FOREIGN KEY (companyNameServer_id) REFERENCES companyNameServer(id),
-           statusOnline BOOLEAN NOT NULL,          
+           IP VARCHAR(15) NOT NULL,  
+           companyNameServer_id INT,      
+            statusOnline BOOLEAN NOT NULL,          
            created dateTime DEFAULT CURRENT_TIMESTAMP
+            FOREIGN KEY (companyNameServer_id) REFERENCES companyNameServer(id),
        );
     `;
     await runQuery(Q);
@@ -35,6 +35,18 @@ export async function createSampleData(): Promise<void> {
 
     Q = `
         INSERT INTO serverName (serverName, IP, companyNameServer_id , statusOnline) VALUES         
+        ('Microsoft', '192.168.1.1', 1,1),
+        ('IBM', '192.168.1.2', 2,0),
+        ('GoDaddy', '192.168.1.4', 3,1),
+        ('BDigitalO', '192.168.1.5', 4,0),
+        ('Microsoft', '192.168.1.6', 1,1),
+        ('IBM', '192.168.1.7', 2,0),
+        ('GoDaddy', '192.168.1.4', 3,0),
+        ('BDigitalO', '192.168.1.5', 4,0),
+        ('Microsoft', '192.168.1.1', 1,0),
+        ('IBM', '192.168.1.2', 2,0),
+        ('GoDaddy', '192.168.1.4', 3,1),
+        ('BDigitalO', '192.168.1.5', 4,1),
         ('Microsoft', '192.168.1.1', 1,1),
         ('IBM', '192.168.1.2', 2,0),
         ('GoDaddy', '192.168.1.4', 3,1),

@@ -15,7 +15,7 @@ serverRouters.get("/servers", async (req: Request, res: Response, next: NextFunc
 
 
 serverRouters.post(  "/servers/:id",  async (req: Request, res: Response, next: NextFunction) => {
-    // console.log("YO");
+    
     
     const { statusOnline } = req.body;
     const { id } = req.params;
