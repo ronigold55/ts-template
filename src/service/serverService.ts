@@ -24,13 +24,10 @@ export async function getServer(): Promise<serverData[]> {
 
 
 
-export async function updateOnLine(
-    id: number,
-    statusOnline: boolean
-  ): Promise<void> {
-    await runQuery(`
-          UPDATE serverName
-          SET statusOnline = ${statusOnline}
-          WHERE id = ${id}
-      `);
-  }
+export async function updateOnLine(id: number, newValue: boolean) {
+    let q = `UPDATE servers  SET statusOnline= ${newValue} WHERE id=${id};`;
+    const res = (await runQuery(q)) as ResultSetHeader | any;
+    if (res.affectedRows === 0){
+        console.log("Warning: try to update non-exists servers");        
+    }    
+}
