@@ -7,9 +7,15 @@ import { serverRoutes } from "./controllers/serverControllers";
 
 const server = express();
 
-server.use(cors())
+// server.use(cors())
+// cors
+server.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}));
 
+//use json
 server.use(express.json());
+
+
+// server.use(express.json());
 
 server.use("/", serverRoutes);
 

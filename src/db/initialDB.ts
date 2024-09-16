@@ -1,4 +1,5 @@
 import runQuery from "./dal";
+import { closeDB } from "./dal";
 
 const createTables = async () => {
     let query = `
@@ -52,6 +53,16 @@ const createMoreSampleData = async ()=>{
     await runQuery(q);
 };
 
-// createTables().then(() => console.log("Done Table!!!"));
-// createSampleData().then(() => console.log("Done Data!!!"));
-createMoreSampleData().then(() => console.log("Done Data!!!"));
+// // createTables().then(() => console.log("Done Table!!!"));
+// // createSampleData().then(() => console.log("Done Data!!!"));
+// createMoreSampleData().then(() => console.log("Done Data!!!"));
+
+async function init() {
+    await createTables().then(() => console.log("Done Table!!!"));
+    await createSampleData().then(() =>console.log("Done Data!!!"));
+    createMoreSampleData().then(() => console.log("Done Data!!!")).then(()=> {
+        closeDB();
+    });
+}
+
+init();

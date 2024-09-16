@@ -22,3 +22,7 @@ export default function runQuery(q: string, p0?: (number | "active" | "inactive"
         })
     });
 }
+
+export const closeDB = async () =>{
+    connection.end()
+}
