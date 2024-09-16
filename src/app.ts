@@ -1,13 +1,18 @@
-import express, { Request, Response } from "express"
+import cors from "cors"
+import express from "express";
+import { appConfig } from "./utils/appConfig";
+import catchAll from "./middlewares/catchAll";
+import { serverRoutes } from "./controllers/serverControllers";
+
 
 const server = express();
 
-// load body
+server.use(cors())
+
 server.use(express.json());
 
-server.get("/", (req: Request, res: Response)=>{
-    res.send("<h1>Hello World!</h1>")
-})
+server.use("/", serverRoutes);
 
-server.listen(3000, ()=>{console.log("Listening on http://localhost:3000");
-})
+server.use(catchAll);
+
+server.listen(appConfig.port, ()=>{console.log(`Listening on http://localhost:${appConfig.port}`)})
