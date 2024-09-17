@@ -70,8 +70,8 @@ const createMoreSampleData = async ()=>{
 // createMoreSampleData().then(() => console.log("Done Data!!!"));
 
 async function init() {
-    await createTables().then(() => console.log("Done Table!!!"));
-    await createSampleData().then(() =>console.log("Done Data!!!"))
+    // await createTables().then(() => console.log("Done Table!!!"));
+    // await createSampleData().then(() =>console.log("Done Data!!!"))
      createMoreSampleData().then(() => console.log("Done Data!!!")).then(()=> {
         closeDB();
     
