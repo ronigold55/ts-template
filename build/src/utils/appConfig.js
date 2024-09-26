@@ -28,12 +28,14 @@ class DevAppconfig extends BaseAppConfig {
     constructor() {
         super(...arguments);
         this.port = 4000;
-        this.dbConfig = Object.assign(Object.assign({}, this.dbConfig), { host: 'localhost', port: 3309, database: 'store' });
+        this.dbConfig = Object.assign(Object.assign({}, this.dbConfig), { host: process.env.DB_HOST, port: 3306, database: 'store' });
     }
 }
 class ProdAppconfig extends BaseAppConfig {
     constructor() {
         super(...arguments);
+        this.errorLogFile = "/app/logs/error.log";
+        this.accessLogFile = "/app/logs/access.log";
         this.port = 4000;
         this.dbConfig = Object.assign(Object.assign({}, this.dbConfig), { host: process.env.DB_HOST, port: 3306, database: 'store' });
     }

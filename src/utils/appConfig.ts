@@ -27,13 +27,15 @@ class DevAppconfig extends BaseAppConfig {
     readonly port: number = 4000
     readonly dbConfig = {
         ...this.dbConfig,
-        host: 'localhost',
-        port: 3309,
+        host: process.env.DB_HOST,
+        port: 3306,
         database: 'store',
     }
 }
 
 class ProdAppconfig extends BaseAppConfig {
+    readonly errorLogFile = "/app/logs/error.log";
+    readonly accessLogFile = "/app/logs/access.log";
     readonly port: number = 4000
     readonly dbConfig = {
         ...this.dbConfig,
