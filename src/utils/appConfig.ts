@@ -1,4 +1,10 @@
 import dotenv from "dotenv"
+import { existsSync } from "fs";
+
+if (!existsSync(".env")){
+    throw new Error("ENV file is missing (.env)")
+}
+
 
 // load enviroment variables
 dotenv.config()
@@ -10,7 +16,7 @@ class BaseAppConfig {
     readonly doormanKey = process.env.DOORMAN_KEY;
     readonly jwtSecrete = process.env.JWT_SECRET;
 
-    readonly dbConfig = {               
+    readonly dbConfig = {
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD
     }
@@ -18,22 +24,22 @@ class BaseAppConfig {
 }
 
 class DevAppconfig extends BaseAppConfig {
-    readonly port : number = 4000        
+    readonly port: number = 4000
     readonly dbConfig = {
         ...this.dbConfig,
         host: 'localhost',
         port: 3309,
-        database: 'store',                
+        database: 'store',
     }
 }
 
 class ProdAppconfig extends BaseAppConfig {
-    readonly port : number = 443    
+    readonly port: number = 4000
     readonly dbConfig = {
         ...this.dbConfig,
-        host: 'aws://db:/localZone-use123123',
-        port: 3309,
-        database: 'store_prod',                
+        host: process.env.DB_HOST,
+        port: 3306,
+        database: 'store',
     }
 }
 

@@ -16,11 +16,11 @@ const server = express();
 // protect from dos attack 
 server.use(expressRateLimit({
     windowMs: 1000,  // time window
-    max: 2,     // amount of calls (per time window)
+    max: 15,     // amount of calls (per time window)
 }))
 
 // cors
-server.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}));
+server.use(cors());
 
 // Doorman security chcek
 // server.use(doorman);
