@@ -23,7 +23,7 @@ export default function handleScketIO(httpServer: Server): void {
         })
 
         socket.on("disconnect", () => {
-            console.log("client disconnected!");
+            console.log("The client" + " " + username + " disconnected!");
             socketServer.sockets.emit("server-msg", {msg: `${username} left the room!`, "username": "system"})
         })
     })
