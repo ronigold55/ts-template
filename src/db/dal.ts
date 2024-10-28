@@ -1,6 +1,7 @@
 import mysql from "mysql2";
 import { appConfig } from "../utils/appConfig";
 
+
 const connection = mysql.createPool({
     host: appConfig.dbConfig.host,
     user: appConfig.dbConfig.user,
@@ -8,6 +9,8 @@ const connection = mysql.createPool({
     database: appConfig.dbConfig.database,
     port: appConfig.dbConfig.port
 })
+
+
 
 // Function to run an SQL query
 export default function runQuery(q: string, params: any[]=[]): Promise<any[]> {
@@ -28,3 +31,13 @@ export default function runQuery(q: string, params: any[]=[]): Promise<any[]> {
 export const closeDB = async () =>{
     connection.end()
 }
+
+// runQuery('CREATE DATABASE IF NOT EXISTS vacation')
+// .then(() => {
+//     console.log("DB created");
+// }).catch((e) => {
+//     console.log("DB creation error:", e);
+// }).finally (async() =>{
+//     await closeDB()
+// });
+    

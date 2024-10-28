@@ -2,9 +2,9 @@ import express, { NextFunction, Request, Response } from "express"
 import cors from "cors"
 import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
-import { doorman } from "./middlewares/doormanMiddleware";
+// import { doorman } from "./middlewares/doormanMiddleware";
 import catchAll from "./middlewares/catchAll";
-import { logMW } from "./middlewares/logMW";
+// import { logMW } from "./middlewares/logMW";
 import { authRoutes } from "./controllers/authControllers";
 import { productRouter } from "./controllers/productControllers";
 import { orderRouts } from "./controllers/orderControllers";
@@ -26,7 +26,7 @@ server.use(cors());
 // server.use(doorman);
 
 // log
-server.use(logMW);
+// server.use(logMW);
 
 // load body
 server.use(express.json());

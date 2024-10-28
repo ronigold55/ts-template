@@ -17,8 +17,11 @@ class BaseAppConfig {
     readonly jwtSecrete = process.env.JWT_SECRET;
 
     readonly dbConfig = {
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD
+        host: 'localhost',
+        port: 3306,
+        database: 'store',
+        user: 'root',
+        password: ''
     }
 
 }
@@ -26,10 +29,12 @@ class BaseAppConfig {
 class DevAppconfig extends BaseAppConfig {
     readonly port: number = 4000
     readonly dbConfig = {
-        ...this.dbConfig,        
+        ...this.dbConfig,
         host: 'localhost',
         port: 3306,
         database: 'store',
+        user: 'root',
+        password: ''
     }
 }
 
@@ -39,9 +44,11 @@ class ProdAppconfig extends BaseAppConfig {
     readonly port: number = 4000
     readonly dbConfig = {
         ...this.dbConfig,
-        host: process.env.DB_HOST,
+        host: 'localhost',
         port: 3306,
         database: 'store',
+        user: 'root',
+        password: ''
     }
 }
 
@@ -49,6 +56,3 @@ class ProdAppconfig extends BaseAppConfig {
 export const appConfig = process.env.IS_PRODUCTION === "true"
     ? new ProdAppconfig()
     : new DevAppconfig();
-
-
-
