@@ -96,9 +96,9 @@ const createSampleData = async () => {
 // createTables().then(() => {
 //     console.log("Done creating tables");
     
-//     createSampleData().then(()=>{
-//         console.log("Done adding data");
-//         closeDB()
-//     })
+    // createSampleData().then(()=>{
+    //     console.log("Done adding data");
+    //     closeDB()
+    // })
 // })
 

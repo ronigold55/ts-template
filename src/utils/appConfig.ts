@@ -26,8 +26,8 @@ class BaseAppConfig {
 class DevAppconfig extends BaseAppConfig {
     readonly port: number = 4000
     readonly dbConfig = {
-        ...this.dbConfig,
-        host: process.env.DB_HOST,
+        ...this.dbConfig,        
+        host: 'localhost',
         port: 3306,
         database: 'store',
     }
