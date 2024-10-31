@@ -4,6 +4,7 @@ import { appConfig } from "./utils/appConfig";
 import { isDbServerUp } from "./utils/helpers";
 import catchAll from "./middlewares/catchAll";
 import { logMW } from "./middlewares/logMW";
+import { doorman } from "./middlewares/doormanMiddleware";
 // import { authRoutes } from "./controllers/authControllers";
 import {prodcutRouter  } from "./controllers/productControllers";
 // import { orderRouts } from "./controllers/orderControllers";
@@ -14,6 +15,8 @@ import expressFileUpload from "express-fileupload"
 const server = express();
 
 server.use(cors());
+
+// server.use(doorman)
 
 server.use(expressFileUpload())
 

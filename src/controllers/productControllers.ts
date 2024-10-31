@@ -37,7 +37,8 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
     try {
         const newProduct = new ProdcutModel(req.body);
         await addProdcut(newProduct);
-        res.status(201).send("your product is added");
+        res.status(StatusCode.Created).send("your product is added");
+        // console.log(res);
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
@@ -50,6 +51,8 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
     try {
         await updateProdcut(req.body, +req.params.id);
         res.status(StatusCode.Ok).send("your product is updated");
+        console.log(res);
+        
     } catch (error) {
 
         if (error.message.includes("product id not found")) {

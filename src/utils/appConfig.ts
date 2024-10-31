@@ -7,7 +7,7 @@ class AppConfig {
     // readonly errorLogFile = __dirname + "\\..\\logs\\error.log";
     readonly errorLogFile = path.resolve(__dirname, "..", "logs", "error.log");
     readonly accessLogFile = __dirname + "\\..\\logs\\access.log";
-    // readonly doormanKey = "rivka-token-temp-test-whatever";
+    readonly doormanKey = "security key";
     // readonly jwtSecrete = "This is example for secrete key %^&#$%#B FGERT";
     readonly dbConfig = {
         host: 'localhost',

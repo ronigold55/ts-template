@@ -113,3 +113,10 @@ New PATCH to: /api/v1/products/101
 New PATCH to: /api/v1/products/:101
 New PATCH to: /api/v1/products/:101
 New PATCH to: /api/v1/products/:101
+New POST to: /api/v1/products/
+New GET to: /api/v1/products/
+New POST to: /api/v1/products/
+New POST to: /api/v1/products/
+New POST to: /api/v1/products/
+New POST to: /api/v1/products/
+New GET to: /api/v1/products/
