@@ -37,17 +37,36 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
     try {
         const newProduct = new ProdcutModel(req.body);
         await addProdcut(newProduct);
-        res.status(201).send("ok");
+        res.status(201).send("your product is added");
     } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server Error");
     }
 })
 
-prodcutRouter.put(appConfig.routePrefix + "/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+// prodcutRouter.put(appConfig.routePrefix + "/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+    prodcutRouter.put(appConfig.routePrefix + "/products/id", async (req: Request, res: Response, next: NextFunction) => {
+
     try {
         await updateProdcut(req.body, +req.params.id);
-        res.status(StatusCode.Ok).send("ok");
+        res.status(StatusCode.Ok).send("your product is updated");
+    } catch (error) {
+
+        if (error.message.includes("product id not found")) {
+            res.status(StatusCode.BadRequest).send("ID not found")
+            return
+        }
+
+        console.log(error);
+        res.status(StatusCode.ServerError).send("Internal Server Error");
+    }
+})
+
+prodcutRouter.patch(appConfig.routePrefix + "/products/id", async (req: Request, res: Response, next: NextFunction) => {
+
+    try {
+        await updateProdcut(req.body, +req.params.id);
+        res.status(StatusCode.Ok).send("your product is updated");
     } catch (error) {
 
         if (error.message.includes("product id not found")) {
