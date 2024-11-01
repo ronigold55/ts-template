@@ -1,8 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
-import { addProdcut, getProducts, updateProdcut } from "../services/productService";
-import ProdcutModel from "../models/productModel";
+import { addProduct, deleteProduct, getProducts, updateProduct as updateProduct } from "../services/productService";
+import { runQuery} from '../db/dal'
+import ProductModel from "../models/productModel";
 import { appConfig } from "../utils/appConfig";
 import { StatusCode } from "../models/statusEnum";
+import { number } from "joi";
 
 export const prodcutRouter = express.Router();
 
@@ -35,8 +37,8 @@ prodcutRouter.get(appConfig.routePrefix + "/products/:id", async (req: Request, 
 prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        const newProduct = new ProdcutModel(req.body);
-        await addProdcut(newProduct);
+        const newProduct = new ProductModel(req.body);
+        await addProduct(newProduct);
         res.status(StatusCode.Created).send("your product is added");
         // console.log(res);
     } catch (error) {
@@ -49,7 +51,7 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
     prodcutRouter.put(appConfig.routePrefix + "/products/id", async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        await updateProdcut(req.body, +req.params.id);
+        await updateProduct(req.body, +req.params.id);
         res.status(StatusCode.Ok).send("your product is updated");
         console.log(res);
         
@@ -68,7 +70,7 @@ prodcutRouter.post(appConfig.routePrefix + "/products", async (req: Request, res
 prodcutRouter.patch(appConfig.routePrefix + "/products/id", async (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        await updateProdcut(req.body, +req.params.id);
+        await updateProduct(req.body, +req.params.id);
         res.status(StatusCode.Ok).send("your product is updated");
     } catch (error) {
 
@@ -81,5 +83,21 @@ prodcutRouter.patch(appConfig.routePrefix + "/products/id", async (req: Request,
         res.status(StatusCode.ServerError).send("Internal Server Error");
     }
 })
+
+prodcutRouter.delete(appConfig.routePrefix + "/products/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = parseInt(req.params.id, 10); // Convert id to a number
+        if (isNaN(id)) {
+            return res.status(400).send("Invalid product ID"); // Return 400 if id is not a valid number
+        }
+        await deleteProduct(name); // Assuming deleteProduct expects a number
+        res.sendStatus(204); // No Content
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 
 export default prodcutRouter

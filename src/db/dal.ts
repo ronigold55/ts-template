@@ -10,7 +10,7 @@ const connection = mysql.createPool({
 })
 
 // Function to run an SQL query
-export default function runQuery(q: string): Promise<any[]> {
+export  function runQuery(q: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
 
         connection.query(q, (err, res) => {
@@ -23,4 +23,5 @@ export default function runQuery(q: string): Promise<any[]> {
     });
 }
 
-// runQuery("select * from product").then(...).catch(...)
+
+

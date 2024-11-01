@@ -1,5 +1,5 @@
 import assert from "assert";
-import runQuery from "../db/dal";
+import { runQuery } from "../db/dal";
 import ProdcutModel from "../models/productModel";
 
 export async function getProducts(id?: number): Promise<ProdcutModel[]> {
@@ -18,14 +18,14 @@ export async function getProducts(id?: number): Promise<ProdcutModel[]> {
     return products
 }
 
-export async function addProdcut(p:ProdcutModel) {
+export async function addProduct(p:ProdcutModel) {
     const q = `INSERT INTO product (name, description, price) 
                 VALUES ('${p.name}', '${p.description || ""}', ${p.price})`;
         
     await runQuery(q);
 }
 
-export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
+export async function updateProduct(p: Partial<ProdcutModel>, id: number) {
     let q = `SELECT id FROM product WHERE id=${id};`;
     const res = await runQuery(q);    
     assert(res.length === 1, "product id not found");    
@@ -56,3 +56,17 @@ export async function updateProdcut(p: Partial<ProdcutModel>, id: number) {
     
     await runQuery(q);    
 }
+
+export async function deleteProduct(p: ProdcutModel): Promise<void> {
+    try {
+        let q = 'DELETE FROM product WHERE ID = ?';
+       
+        console.log(`Product with ID ${p.id} has been deleted successfully.`);
+        await runQuery(q);
+    } catch (error) {
+        console.error(`Error deleting product with ID ${p.id}:`, error);
+        throw error; // Re-throw error to handle it in higher levels if needed
+         // Pass the product ID as a parameter
+    }
+}
+

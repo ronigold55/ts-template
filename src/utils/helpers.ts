@@ -1,4 +1,4 @@
-import runQuery from "../db/dal";
+import { runQuery } from "../db/dal";
 import { promises as fs } from "fs";
 import { appConfig } from "./appConfig";
 import { UploadedFile } from "express-fileupload";
