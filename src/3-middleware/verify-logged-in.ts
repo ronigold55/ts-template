@@ -21,7 +21,7 @@ async function verifyLoggedIn(request: Request, response: Response, next: NextFu
     }
     
     //logIt
-    logIt(`The user : ${userInfo} was logged in`);
+    logIt(`The user :  was logged in`);
     // All ok:
     next();// Continue to next middleware or to desired route.
 }

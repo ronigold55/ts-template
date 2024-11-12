@@ -11,7 +11,7 @@ const connection = mysql.createPool({
 
 console.log("We're connected to MySQL");
 
-function execute(sql: string, values?: any[]): Promise<any> {
+export default function execute(sql: string, values?: any[]): Promise<any> {
 
     return new Promise<any>((resolve, reject) => { // To Promisify an asynchronous function
 
@@ -31,6 +31,6 @@ function execute(sql: string, values?: any[]): Promise<any> {
     });
 }
 
-export default {
-    execute
-};
+export const closeDB = async () =>{
+    connection.end()
+}

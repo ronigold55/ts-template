@@ -1,7 +1,7 @@
 import { OkPacket } from "mysql";
 import auth from "../2-utils/auth";
 import hash from "../2-utils/cyber";
-import dal from "../2-utils/dal";
+import execute from "../2-utils/dal";
 import { UnauthorizeError, ValidationError } from "../4-models/client-errors";
 import CredentialsModel from "../4-models/credentials-model";
 import UserModel from "../4-models/user-model";
@@ -16,10 +16,10 @@ async function register(user: UserModel): Promise<string> { // Returning a new t
     user.password = hash(user.password);
 
     // insert the new user to the DB
-    const sql = `INSERT INTO users (userId, firstName, lastName, username, password, roleId) VALUES(
-                    DEFAULT, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (userId, firstName, lastName, username,email,phoneNumber, password, roleId) VALUES(
+                    DEFAULT, ?, ?, ?, ?, ?,?,?)`;
 
-    const result: OkPacket = await dal.execute(sql, [user.firstName, user.lastName, user.username, user.password, 2]);
+    const result: OkPacket = await execute(sql, [user.firstName, user.lastName, user.username,user.email,user.phoneNumber, user.password, 2]);
 
     // update the user with the returned ID
     user.userId = result.insertId;
@@ -45,7 +45,7 @@ async function login(credentials: CredentialsModel): Promise<string> {
     // Get the user by his credentials
     const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
 
-    const users = await dal.execute(sql, [credentials.username, credentials.password]);
+    const users = await execute(sql, [credentials.username, credentials.password]);
 
     const user = users[0];
 
@@ -69,7 +69,7 @@ async function usernameExists(username: string): Promise<boolean> {
                         COUNT(*) AS usersWithName
                         FROM users
                         WHERE username = ?`;
-    const users = await dal.execute(sql, [username]);
+    const users = await execute(sql, [username]);
 
     // if there are more than 0, the username exists.
     return users[0].usersWithName > 0;

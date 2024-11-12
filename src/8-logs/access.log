@@ -1,35 +1,7 @@
-testing logit
-The user : function userInfo(options) {
-  if (typeof options !== 'object')
-    options = null;
-
-  const ctx = {};
-  const user = getUserInfo(options, ctx);
-
-  if (user === undefined)
-    throw new ERR_SYSTEM_ERROR(ctx);
-
-  if (isWindows) {
-    user.uid |= 0;
-    user.gid |= 0;
-  }
-
-  return user;
-} was logged in
-The user : function userInfo(options) {
-  if (typeof options !== 'object')
-    options = null;
-
-  const ctx = {};
-  const user = getUserInfo(options, ctx);
-
-  if (user === undefined)
-    throw new ERR_SYSTEM_ERROR(ctx);
-
-  if (isWindows) {
-    user.uid |= 0;
-    user.gid |= 0;
-  }
-
-  return user;
-} was logged in
+The user :  was logged in
+The user :  was logged in
+The user :  was logged in
+The user :  was logged in
+The user :  was logged in
+The user :  was logged in
+The user :  was logged in

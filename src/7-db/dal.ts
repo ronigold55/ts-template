@@ -10,10 +10,10 @@
 // })
 
 // // Function to run an SQL query
-// export default function runQuery(q: string): Promise<any[]> {
+// export default function runQuery(q: string, params: any[]=[]): Promise<any[]> {
 //     return new Promise((resolve, reject) => {
 
-//         connection.query(q, (err, res) => {
+//         connection.query(q, params, (err, res) => {
 //             if (err) {
 //                 reject(err);
 //                 return;
@@ -24,3 +24,7 @@
 // }
 
 // // runQuery("select * from product").then(...).catch(...)
+
+// export const closeDB = async () =>{
+//     connection.end()
+// }

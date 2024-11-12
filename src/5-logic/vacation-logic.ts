@@ -1,5 +1,5 @@
 import { OkPacket } from "mysql";
-import dal from "../2-utils/dal";
+import execute from "../2-utils/dal";
 import { IdNotFoundError, ValidationError } from "../4-models/client-errors";
 import VacationModel from "../4-models/vacation-model";
 import { v4 as uuid } from "uuid";
@@ -24,7 +24,7 @@ async function getAllVacations(authHeader: string): Promise<VacationModel[]> {
                     GROUP BY vacationId
                     ORDER BY arrivalDate`;
 
-    const vacations = await dal.execute(sql, [userId]);
+    const vacations = await execute(sql, [userId]);
 
     // validate if the vacation was returned:
     if (!vacations) throw new IdNotFoundError(userId);
@@ -41,7 +41,7 @@ async function getOneVacation(vacationId: number): Promise<VacationModel> {
     const sql = `SELECT * FROM vacations
                     WHERE vacationId = ?`;
 
-    const vacations = await dal.execute(sql, [vacationId]);
+    const vacations = await execute(sql, [vacationId]);
 
     const vacation = vacations[0];
 
@@ -61,7 +61,7 @@ async function addFollow(follow: FollowerModel): Promise<FollowerModel> {
     // add the follower connection in the DB
     const sql = `INSERT INTO followers VALUES (?, ?)`;
 
-    await dal.execute(sql, [follow.userId, follow.vacationId]);
+    await execute(sql, [follow.userId, follow.vacationId]);
 
     return follow;
 };
@@ -73,7 +73,7 @@ async function deleteFollow(follow: FollowerModel): Promise<void> {
     // delete the follower connection in the DB
     const sql = `DELETE FROM followers WHERE userId = ? AND vacationId =?`;
 
-    const result: OkPacket = await dal.execute(sql, [follow.userId, follow.vacationId]);
+    const result: OkPacket = await execute(sql, [follow.userId, follow.vacationId]);
 
     // make sure the update was registered
     if (result.affectedRows === 0) throw new IdNotFoundError(follow.vacationId);
@@ -111,7 +111,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
                     price = ?
                     WHERE vacations.vacationId = ?`;
 
-    const result: OkPacket = await dal.execute(sql, [vacation.destination, vacation.description, vacation.imageName,
+    const result: OkPacket = await execute(sql, [vacation.destination, vacation.description, vacation.imageName,
     vacation.arrivalDate, vacation.departureDate, vacation.price, vacation.vacationId]);
 
     // make sure the update was registered
@@ -142,7 +142,7 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
     //insert new vacation into DB
     const sql = `INSERT INTO vacations VALUES (DEFAULT, ?, ?, ?, ?, ?, ? )`;
 
-    const result: OkPacket = await dal.execute(sql, [vacation.destination, vacation.description, vacation.imageName,
+    const result: OkPacket = await execute(sql, [vacation.destination, vacation.description, vacation.imageName,
     vacation.arrivalDate, vacation.departureDate, vacation.price]);
 
     // update the vacation object with the returned data
@@ -159,7 +159,7 @@ async function deleteVacation(vacationId: number): Promise<void> {
 
     //get the current image by vacationId
     const sqlSelectImage = `SELECT imageName FROM vacations WHERE vacations.vacationId = ?`;
-    const vacations = await dal.execute(sqlSelectImage, [vacationId]);
+    const vacations = await execute(sqlSelectImage, [vacationId]);
     const vacation = vacations[0];
     if (!vacations) throw new IdNotFoundError(vacationId);
     //delete the image
@@ -168,7 +168,7 @@ async function deleteVacation(vacationId: number): Promise<void> {
     // delete the vacation by vacationId from DB
     const sql = `DELETE FROM vacations WHERE vacations.vacationId = ? `;
 
-    const result: OkPacket = await dal.execute(sql, [vacationId]);
+    const result: OkPacket = await execute(sql, [vacationId]);
 
     // make sure the update was registered
     if (result.affectedRows === 0) throw new IdNotFoundError(vacationId);
