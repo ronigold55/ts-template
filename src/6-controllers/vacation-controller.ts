@@ -13,6 +13,7 @@ const router = express.Router();
 // GET http://localhost:3001/api/vacations
 router.get("/api/vacations", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        
         const authHeader = request.header("authorization");
         const vacations = await vacationLogic.getAllVacations(authHeader);
         response.json(vacations); // status: 200 - OK
