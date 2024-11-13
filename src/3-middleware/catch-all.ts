@@ -1,10 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { appendFile } from 'fs';
 import config from "../2-utils/config";
+import logger from "../2-utils/logger";
 function catchAll(err: any, request: Request, response: Response, next: NextFunction): void {
 
     // Log error to console:
     console.log(err);
+
+    const status = err.status || 500;
+
+    if (status === 500) {
+
+        logger.logError("catchAll error", err);
+
+    }    
 
     // log error to log file...
 
@@ -19,3 +28,5 @@ function catchAll(err: any, request: Request, response: Response, next: NextFunc
 }
 
 export default catchAll;
+
+

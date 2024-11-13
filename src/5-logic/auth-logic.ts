@@ -5,6 +5,8 @@ import execute from "../2-utils/dal";
 import { UnauthorizeError, ValidationError } from "../4-models/client-errors";
 import CredentialsModel from "../4-models/credentials-model";
 import UserModel from "../4-models/user-model";
+import { logIt } from "../2-utils/helpers";
+
 
 async function register(user: UserModel): Promise<string> { // Returning a new token
 
@@ -58,6 +60,23 @@ async function login(credentials: CredentialsModel): Promise<string> {
     // Generate new token: 
     const token = auth.generateNewToken(user);
 
+    
+    //logIt
+    // logIt(`The user: '${credentials.username}' was logged in at}`local_time);
+    // Define the logIt function
+const logIt = (message: string): void => {
+    const localTime = new Date().toLocaleString(); // Get the local time in a readable format
+    console.log(`[${localTime}] ${message}`);
+    logIt(`The user: '${credentials.username}' was logged in at ${localTime}`);
+
+  };
+  
+  // Usage example
+  
+  
+
+    // All ok:
+    // next();// Continue to next middleware or to desired route.
     return token;
 
 };

@@ -3,7 +3,6 @@ import auth from "../2-utils/auth";
 import { UnauthorizeError } from "../4-models/client-errors";
 import CredentialsModel from "../4-models/credentials-model";
 import { logIt } from "../2-utils/helpers";
-import { userInfo } from "os";
 
 
 async function verifyLoggedIn(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -21,9 +20,9 @@ async function verifyLoggedIn(request: Request, response: Response, next: NextFu
     }
     
     //logIt
-    logIt(`The user :  was logged in`);
+    // logIt(`The user :' ${authHeader.username} + ' was logged in`);
     // All ok:
-    next();// Continue to next middleware or to desired route.
+    // next();// Continue to next middleware or to desired route.
 }
 
 export default verifyLoggedIn;
